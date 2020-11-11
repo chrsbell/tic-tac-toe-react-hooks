@@ -1,14 +1,16 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import Board from './Board.jsx';
 import { GameContext, initialGameState, reducer } from './GameContext.jsx';
 
 const App = () => {
-  const [gameState, dispatch] = createContext();
+  const [gameState, dispatch] = useReducer(reducer, initialGameState);
   return (
     <>
       <h1>Tic-Tac-Toe</h1>
-      <Board />
+      <GameContext.Provider value={{ gameState, dispatch }}>
+        <Board />
+      </GameContext.Provider>
     </>
   );
 };
