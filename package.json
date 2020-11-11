@@ -1,7 +1,7 @@
 {
   "name": "tic-tac-toe",
   "version": "1.0.0",
-  "description": "A tic-tac-toe created in 2 hours",
+  "description": "A tic-tac-toe game",
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/index.js",
