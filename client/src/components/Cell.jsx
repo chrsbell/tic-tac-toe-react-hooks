@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { GameContext } from './GameContext.jsx';
@@ -14,14 +14,33 @@ const Container = styled.div`
   background: #d9dbda;
 `;
 
-const Cell = () => {
+const Cell = ({ row, column }) => {
   const { dispatch, gameState } = useContext(GameContext);
   const [innerText, setInnerText] = useState(' ');
 
+  const setBoardCell = (symbol) => {
+    // shallow copy the board to update the store
+    let newBoard = [...gameState.board];
+    newBoard[row][column] = symbol;
+    dispatch({ type: 'board', board: newBoard });
+  };
+
+  // clear the cell on game reset
+  useEffect(() => {
+    if (gameState.reset) {
+      setBoardCell(null);
+      setInnerText(' ');
+    }
+  }, [gameState.reset]);
+
   const onClick = () => {
-    // change the player's turn
-    setInnerText(gameState.turn === 1 ? 'X' : 'O');
-    dispatch({ type: 'turn', turn: gameState.turn === 1 ? 2 : 1 });
+    if (!gameState.didWin) {
+      // change the player's turn
+      let symbol = gameState.turn === 1 ? 'X' : 'O';
+      setBoardCell(symbol);
+      setInnerText(symbol);
+      dispatch({ type: 'turn', turn: gameState.turn === 1 ? 2 : 1 });
+    }
   };
 
   return <Container onClick={onClick}>{innerText}</Container>;
