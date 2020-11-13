@@ -33,13 +33,13 @@ const Cell = ({ row, column }) => {
     }
   }, [gameState.reset]);
 
+  // set the cell's symbol
   const onClick = () => {
-    if (!gameState.didWin) {
-      // change the player's turn
+    if (!gameState.win) {
+      console.log(gameState.turn);
       let symbol = gameState.turn === 1 ? 'X' : 'O';
       setBoardCell(symbol);
       setInnerText(symbol);
-      dispatch({ type: 'turn', turn: gameState.turn === 1 ? 2 : 1 });
     }
   };
 
