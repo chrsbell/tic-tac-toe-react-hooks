@@ -2,9 +2,9 @@ var path = require('path');
 var SRC_DIR = path.join(__dirname, '/client/src/components');
 var DIST_DIR = path.join(__dirname, '/public/dist');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-module.exports = {
+module.exports = (env, argv) => {
   devtool: 'source-map',
-  mode: 'development',
+  mode: argv.mode,
   entry: {
     main: `${SRC_DIR}/App.jsx`,
   },
